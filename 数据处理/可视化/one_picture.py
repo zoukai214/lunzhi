@@ -1,0 +1,11 @@
+def one_picture(filename,gcam,cls,raw_image):
+        cam = gcam / np.max(gcam)
+        cam = cv2.resize(cam,(raw_image.shape[0],raw_image.shape[1]))
+        mask = np.where(cam>0.8)
+        x0 = mask[0].min()
+        x1 = mask[0].max()
+        y0 = mask[1].min()
+        y1 = mask[1].max()
+        cv2.rectangle(raw_image,(y0,x0),(y1,x1),(55,255,155),2)
+        cv2.putText(raw_image, cls, (y0,x0), cv2.FONT_HERSHEY_SIMPL    EX, 1.2, (255, 0, 0), 1, cv2.LINE_AA)
+        cv2.imwrite(filename,np.uint8(raw_image))
